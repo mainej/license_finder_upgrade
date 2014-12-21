@@ -1,0 +1,76 @@
+require "delegate"
+
+module LicenseFinderUpgrade
+  class Configuration
+    def self.ensure_default
+      prepare(Persistence.get)
+    end
+
+    # It's nice to keep destructive file system manipulation out of the
+    # initializer.  That reduces test polution, but is slightly inconvenient
+    # for methods like Configuration.ensure_default and Configuration.move!,
+    # which need a working artifacts directory. This helper is a compromise.
+    def self.prepare(config)
+      result = new(config)
+      result.artifacts.init
+      result
+    end
+
+    attr_accessor :whitelist, :ignore_groups, :ignore_dependencies, :artifacts, :project_name, :gradle_command
+
+    def initialize(config)
+      @whitelist     = Array(config['whitelist'])
+      @ignore_groups = Array(config["ignore_groups"])
+      @ignore_dependencies = Array(config["ignore_dependencies"])
+      @artifacts     = Artifacts.new(Pathname(config['dependencies_file_dir'] || './doc/'))
+      @project_name  = config['project_name'] || determine_project_name
+      @gradle_command = config['gradle_command'] || 'gradle'
+    end
+
+    private
+
+    def determine_project_name
+      Pathname.pwd.basename.to_s
+    end
+
+    class Artifacts < SimpleDelegator
+      def init
+        mkpath
+      end
+
+      def dir
+        __getobj__
+      end
+
+      def database_uri
+        URI.escape(database_file.expand_path.to_s)
+      end
+
+      def database_file
+        join("dependencies.db")
+      end
+
+      def decisions_file
+        join("dependency_decisions.yml")
+      end
+    end
+
+    module Persistence
+      extend self
+
+      def get
+        YAML.load(file.read)
+      end
+
+      private
+
+      def file_dir
+        Pathname.new('.').join('config')
+      end
+
+      def file
+        file_dir.join('license_finder.yml')
+      end
+    end
+  end
+end
