@@ -1,6 +1,7 @@
-# LicenseFinderUpgrade
+# license_finder_upgrade
 
-This tool helps upgrade `license_finder` projects from version 1.2 to 2.0.
+`license_finder_upgrade` helps upgrade `license_finder` projects from version
+~1.2 to 2.0.
 
 ## Installation
 
@@ -22,11 +23,12 @@ Run the command once, in your project directory:
 There should be no output, but a new file should exist in your `doc/` directory
 (or whichever directory `license_finder` typically stores files in) called
 `dependency_decisions.yml`.  You may want to review this file for accuracy and
-completeness.
+completeness.  See the `license_finder` version 2 README for information about
+storing this file in version control.
 
 You can delete all the other `doc/dependencies*` files, if you want.  If you
-want to keep some textual reports, see the version 2.0 `license_finder` docs
-about `license_finder report`.  You should at least delete
+want to keep some textual reports, see the version 2 `license_finder` README
+docs about `license_finder report`.  You should at least delete
 `doc/dependencies.db` since it is not used by `license_finder` version 2.0 and
 up.
 
