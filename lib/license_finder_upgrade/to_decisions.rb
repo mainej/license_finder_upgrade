@@ -55,9 +55,11 @@ module LicenseFinderUpgrade
     end
 
     def prepare_licenses(dep)
-      dep.licenses.each do |license|
-        @decisions.license(dep.name, license, @txn)
-      end
+      unknown_licenses = ["other", "unknown"].to_set
+      dep.
+        licenses.
+        reject { |license| unknown_licenses.include? license }.
+        each   { |license| @decisions.license(dep.name, license, @txn) }
     end
   end
 end

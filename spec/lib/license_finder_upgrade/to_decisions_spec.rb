@@ -43,15 +43,29 @@ module LicenseFinderUpgrade
     end
 
     it "copies manually created dependencies from db" do
-      Dependency.create(name: "system", version: "0.1.2", licenses: ["lic1", "lic2"])
-      Dependency.create(name: "manual", added_manually: true, version: "0.1.2", licenses: ["lic1", "lic2"])
+      Dependency.create(name: "system", version: "0.1.2")
+      Dependency.create(name: "manual", added_manually: true, version: "0.1.2")
       decisions = from_db
       expect(decisions).to include [:add_package, 'manual', '0.1.2', txn]
+      expect(decisions).not_to include [:add_package, 'system', '0.1.2', txn]
+    end
+
+    it "copies manualy created dependencies' licenses from db" do
+      Dependency.create(name: "system", licenses: ["lic1", "lic2"])
+      Dependency.create(name: "manual", added_manually: true, licenses: ["lic1", "lic2"])
+      decisions = from_db
       expect(decisions).to include [:license, 'manual', 'lic1', txn]
       expect(decisions).to include [:license, 'manual', 'lic2', txn]
-      expect(decisions).not_to include [:add_package, 'system', '0.1.2', txn]
       expect(decisions).not_to include [:license, 'system', 'lic1', txn]
       expect(decisions).not_to include [:license, 'system', 'lic2', txn]
+    end
+
+    it "does not copy manually created dependencies' 'other' licenses from db" do
+      Dependency.create(name: "manual", added_manually: true, licenses: ["other", "unknown"])
+      decisions = from_db
+      expect(decisions).not_to include [:license, 'manual', 'other', txn]
+      # 'unknown', in case https://github.com/pivotal/LicenseFinder/pull/124 is merged
+      expect(decisions).not_to include [:license, 'manual', 'unknown', txn]
     end
 
     it "copies manually licensed dependencies from db" do
