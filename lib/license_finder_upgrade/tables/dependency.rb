@@ -2,8 +2,6 @@ require 'json'
 
 module LicenseFinderUpgrade
   class Dependency < Sequel::Model
-    plugin :boolean_readers
-
     plugin :composition
     composition :licenses,
       composer: ->(d) do

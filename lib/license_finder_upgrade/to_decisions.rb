@@ -10,6 +10,7 @@ module LicenseFinderUpgrade
 
     def initialize(options)
       @config = options.fetch(:config)
+      @dependencies = options.fetch(:dependencies)
       @txn = options.fetch(:txn) { default_txn }
       @decisions = Decisions.new
       prepare
@@ -29,6 +30,24 @@ module LicenseFinderUpgrade
       end
       @config.ignore_groups.each do |group|
         @decisions.ignore_group(group, @txn)
+      end
+      @dependencies.added_manually.each do |dep|
+        @decisions.add_package(dep.name, dep.version, @txn)
+      end
+      @dependencies.license_assigned_manually.each do |dep|
+        dep.licenses.each do |license|
+          @decisions.license(dep.name, license, @txn)
+        end
+      end
+      @dependencies.each do |dep|
+        if dep.manual_approval
+          txn = {
+            who: dep.manual_approval.approver,
+            why: dep.manual_approval.notes,
+            when: dep.manual_approval.updated_at
+          }
+          @decisions.approve(dep.name, txn)
+        end
       end
     end
 
