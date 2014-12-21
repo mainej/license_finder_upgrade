@@ -1,7 +1,7 @@
 # license_finder_upgrade
 
-`license_finder_upgrade` helps upgrade [`license_finder`](https://github.com/pivotal/LicenseFinder) projects from version
-~1.2 to 2.0.
+`license_finder_upgrade` helps upgrade [`license_finder`](https://github.com/pivotal/LicenseFinder)
+projects from version ~1.2 to 2.0.
 
 [![Build Status](https://travis-ci.org/mainej/license_finder_upgrade.svg?branch=master)](https://travis-ci.org/mainej/license_finder_upgrade)
 [![Code Climate](https://codeclimate.com/github/mainej/license_finder_upgrade/badges/gpa.svg)](https://codeclimate.com/github/mainej/license_finder_upgrade)
