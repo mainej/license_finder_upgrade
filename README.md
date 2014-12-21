@@ -3,6 +3,9 @@
 `license_finder_upgrade` helps upgrade `license_finder` projects from version
 ~1.2 to 2.0.
 
+[![Build Status](https://travis-ci.org/mainej/license_finder_upgrade.svg?branch=master)](https://travis-ci.org/mainej/license_finder_upgrade)
+[![Code Climate](https://codeclimate.com/github/mainej/license_finder_upgrade/badges/gpa.svg)](https://codeclimate.com/github/mainej/license_finder_upgrade)
+
 ## Installation
 
 1. Make sure you've upgraded to the latest version of `license_finder` _less
