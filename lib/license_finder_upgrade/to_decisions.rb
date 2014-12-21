@@ -37,11 +37,10 @@ module LicenseFinderUpgrade
       end
       @dependencies.added_manually.each do |dep|
         @decisions.add_package(dep.name, dep.version, @txn)
+        prepare_licenses(dep)
       end
       @dependencies.license_assigned_manually.each do |dep|
-        dep.licenses.each do |license|
-          @decisions.license(dep.name, license, @txn)
-        end
+        prepare_licenses(dep)
       end
       @dependencies.each do |dep|
         if dep.manual_approval
@@ -55,5 +54,10 @@ module LicenseFinderUpgrade
       end
     end
 
+    def prepare_licenses(dep)
+      dep.licenses.each do |license|
+        @decisions.license(dep.name, license, @txn)
+      end
+    end
   end
 end
