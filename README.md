@@ -10,9 +10,7 @@
 2. Run `license_finder` at least once with this lower version of
    `license_finder`.  This will ensure that the `license_finder` database is in a
    state which `license_finder_upgrade` understands.
-3. Install with:
-
-    $ gem install license_finder_upgrade
+3. Install with `gem install license_finder_upgrade`
 
 ## Usage
 
