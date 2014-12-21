@@ -5,7 +5,7 @@
 
 ## Installation
 
-1. Make sure you have upgraded to the latest version of `license_finder` _less
+1. Make sure you've upgraded to the latest version of `license_finder` _less
    than_ version 2.0. You can check this with `gem list --local license_finder`.
 2. Run `license_finder` at least once with this lower version of
    `license_finder`.  This will ensure that the `license_finder` database is in a
