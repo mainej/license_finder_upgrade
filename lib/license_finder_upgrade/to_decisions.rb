@@ -2,16 +2,20 @@ module LicenseFinderUpgrade
   class ToDecisions
     def self.default_txn
       {
-        who: "license_finder_upgrade",
-        why: "Upgrading from license_finder 0.8",
+        who: "license_finder_upgrade script",
+        why: "Upgrading from license_finder 1.2 to 2.0",
         when: Time.now.getutc
       }
+    end
+
+    def self.upgrade
+      new(config: LicenseFinderUpgrade.config, dependencies: Dependency).decisions.save!
     end
 
     def initialize(options)
       @config = options.fetch(:config)
       @dependencies = options.fetch(:dependencies)
-      @txn = options.fetch(:txn) { default_txn }
+      @txn = options.fetch(:txn) { self.class.default_txn }
       @decisions = Decisions.new
       prepare
     end
