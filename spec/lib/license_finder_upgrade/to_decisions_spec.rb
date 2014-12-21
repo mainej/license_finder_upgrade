@@ -68,7 +68,7 @@ module LicenseFinderUpgrade
       time = Time.new(10000)
       Dependency.create(name: "system")
       manual = Dependency.create(name: "manual")
-      manual.manual_approval = ManualApproval.create(approver: "Someone", notes: "Some reason", updated_at: time)
+      manual.manual_approval = ManualApproval.create(approver: "Someone", notes: "Some reason", created_at: time)
       manual.save
 
       decisions = from_db

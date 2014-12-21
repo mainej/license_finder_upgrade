@@ -47,7 +47,7 @@ module LicenseFinderUpgrade
           txn = {
             who: dep.manual_approval.approver,
             why: dep.manual_approval.notes,
-            when: dep.manual_approval.updated_at
+            when: dep.manual_approval.safe_created_at
           }
           @decisions.approve(dep.name, txn)
         end
