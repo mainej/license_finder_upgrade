@@ -43,11 +43,11 @@ module LicenseFinderUpgrade
         prepare_licenses(dep)
       end
       @dependencies.each do |dep|
-        if dep.manual_approval
+        if approval = dep.manual_approval
           txn = {
-            who: dep.manual_approval.approver,
-            why: dep.manual_approval.notes,
-            when: dep.manual_approval.safe_created_at
+            who: approval.approver,
+            why: approval.notes,
+            when: approval.safe_created_at
           }
           @decisions.approve(dep.name, txn)
         end
