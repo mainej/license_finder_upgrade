@@ -9,7 +9,10 @@ module LicenseFinderUpgrade
     end
 
     def self.upgrade
-      new(config: LicenseFinderUpgrade.config, dependencies: Dependency).decisions.save!
+      new(
+        config: LicenseFinderUpgrade.config,
+        dependencies: Dependency
+      ).decisions.save!
     end
 
     def initialize(options)
