@@ -12,7 +12,7 @@ Gem::Specification.new do |spec|
   spec.authors       = ["Jacob Maine"]
 
   spec.email         = [""]
-  spec.homepage      = ""
+  spec.homepage      = "https://github.com/mainej/license_finder_upgrade"
   spec.summary       = %q{Upgrade helper for license_finder}
   spec.description   = %q{This tool helps upgrade license_finder projects from version 1.2 to 2.0.}
 
