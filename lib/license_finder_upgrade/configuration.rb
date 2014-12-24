@@ -16,7 +16,7 @@ module LicenseFinderUpgrade
       result
     end
 
-    attr_accessor :whitelist, :ignore_groups, :ignore_dependencies, :artifacts, :project_name, :gradle_command
+    attr_accessor :whitelist, :ignore_groups, :ignore_dependencies, :artifacts, :project_name
 
     def initialize(config)
       @whitelist     = Array(config['whitelist'])
@@ -24,7 +24,6 @@ module LicenseFinderUpgrade
       @ignore_dependencies = Array(config["ignore_dependencies"])
       @artifacts     = Artifacts.new(Pathname(config['dependencies_file_dir'] || './doc/'))
       @project_name  = config['project_name'] || determine_project_name
-      @gradle_command = config['gradle_command'] || 'gradle'
     end
 
     private
@@ -38,20 +37,18 @@ module LicenseFinderUpgrade
         mkpath
       end
 
-      def dir
-        __getobj__
-      end
-
       def database_uri
         URI.escape(database_file.expand_path.to_s)
       end
 
-      def database_file
-        join("dependencies.db")
-      end
-
       def decisions_file
         join("dependency_decisions.yml")
+      end
+
+      private
+
+      def database_file
+        join("dependencies.db")
       end
     end
 
@@ -64,12 +61,8 @@ module LicenseFinderUpgrade
 
       private
 
-      def file_dir
-        Pathname.new('.').join('config')
-      end
-
       def file
-        file_dir.join('license_finder.yml')
+        Pathname.new('.').join('config', 'license_finder.yml')
       end
     end
   end
