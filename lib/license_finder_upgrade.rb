@@ -1,4 +1,3 @@
-require "license_finder_upgrade/version"
 require 'yaml'
 
 module LicenseFinderUpgrade

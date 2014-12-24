@@ -3,12 +3,11 @@ lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 
 require 'license_finder_upgrade/platform'
-require 'license_finder_upgrade/version'
 
 Gem::Specification.new do |spec|
   spec.required_ruby_version = '>= 1.9.3'
   spec.name          = "license_finder_upgrade"
-  spec.version       = LicenseFinderUpgrade::VERSION
+  spec.version       = "0.0.1"
 
   spec.authors       = ["Jacob Maine"]
 
