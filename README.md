@@ -32,19 +32,25 @@ There should be no output, but a new file should exist in your `doc/` directory
 
 1. Review `dependency_decisions.yml` for accuracy and completeness.  See the
    `license_finder` README for information about the format of the file.
-2. Store `dependency_decisions.yml` in version control.
-3. Delete `doc/dependencies.db`. It is not used by `license_finder` version
+2. Optionally, move `doc/dependency_decisions.yml`. The `license_finder`
+   commands expect to find the file at `doc/dependency_decisions.yml` but can be
+   passed `--decision_file`. If you don't want to pass this option all the time,
+   you can add a `decisions_file` key to `config/license_finder.yml`.
+3. Store `dependency_decisions.yml` in version control.
+4. Delete `doc/dependencies.db`. It is not used by `license_finder` version
    2.0.
-4. Delete all the other `doc/dependencies*` files, if you want.  If you
-   want to keep some textual reports, see the `license_finder` README docs
-   about `license_finder report`.
-5. Clean up your config/license_finder.yml file.  Remove the following keys
-   from the YAML, as their data is now stored in the decisions file:
-   * whitelist
-   * ignore_dependencies
-   * ignore_groups
-   * project_name
-6. Install `license_finder >= 2.0`.  After installing, when you run
+5. Delete all the other `doc/dependencies*` files, if you want.  If you
+   want to keep some textual reports, see the `license_finder report` README
+   docs.
+6. Clean up your `config/license_finder.yml` file.  Remove the following keys
+   from the YAML; their data has been copied to `doc/dependency_decisions.yml`
+   or moved elsewhere:
+   * `whitelist`
+   * `ignore_dependencies`
+   * `ignore_groups`
+   * `project_name`
+   * `dependencies_file_dir` (replaced with `decisions_file`)
+7. Install `license_finder >= 2.0`.  After installing, when you run
    `license_finder` you should see the same list of action items you had before
    upgrading.
 
