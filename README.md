@@ -39,11 +39,12 @@ changed, or if you no longer need it, removed.
    2.0.
 4. Delete all the other `doc/dependencies*` files, if you want.  If you
    want to keep some textual reports, see the `license_finder report` README
-   docs.
-5. Store your changes in version control.
-6. Install `license_finder >= 2.0`.  After installing, when you run
+   docs. `license_finder` 2.0 will not automatically updates these reports, so
+   if you expect them to change, you must learn to run `license_finder report`.
+5. Install `license_finder >= 2.0`.  After installing, when you run
    `license_finder` you should see the same list of action items you had before
    upgrading.
+6. Store your changes in version control.
 
 
 ## Contributing
