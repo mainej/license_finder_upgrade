@@ -16,7 +16,7 @@ module LicenseFinderUpgrade
       result
     end
 
-    attr_accessor :whitelist, :ignore_groups, :ignore_dependencies, :artifacts, :project_name
+    attr_accessor :whitelist, :ignore_groups, :ignore_dependencies, :artifacts, :project_name, :gradle_command
 
     def initialize(config)
       @whitelist     = Array(config['whitelist'])
@@ -24,9 +24,28 @@ module LicenseFinderUpgrade
       @ignore_dependencies = Array(config["ignore_dependencies"])
       @artifacts     = Artifacts.new(Pathname(config['dependencies_file_dir'] || './doc/'))
       @project_name  = config['project_name'] || determine_project_name
+      @gradle_command = config['gradle_command'] || 'gradle'
     end
 
-    private
+    def save!
+      hash = to_hash
+      if hash.empty?
+        Persistence.delete
+      else
+        Persistence.set(hash)
+      end
+    end
+
+    def to_hash
+      result = {}
+      if gradle_command != "gradle"
+        result['gradle_command'] = gradle_command
+      end
+      if artifacts.decisions_file.cleanpath != Pathname.new("doc/dependency_decisions.yml").cleanpath
+        result['decisions_file'] = artifacts.decisions_file.to_s
+      end
+      result
+    end
 
     def determine_project_name
       Pathname.pwd.basename.to_s
@@ -57,6 +76,14 @@ module LicenseFinderUpgrade
 
       def get
         YAML.load(file.read)
+      end
+
+      def set(hash)
+        file.open('w') { |f| f.write(YAML.dump(hash)) }
+      end
+
+      def delete
+        file.unlink
       end
 
       private

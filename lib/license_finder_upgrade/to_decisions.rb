@@ -9,10 +9,12 @@ module LicenseFinderUpgrade
     end
 
     def self.upgrade
-      new(
+      upgrader = new(
         config: LicenseFinderUpgrade.config,
         dependencies: Dependency
-      ).decisions.save!
+      )
+      upgrader.decisions.save!
+      upgrader.config.save!
     end
 
     def initialize(options)
@@ -23,7 +25,7 @@ module LicenseFinderUpgrade
       prepare
     end
 
-    attr_reader :decisions
+    attr_reader :decisions, :config
 
     private
 
