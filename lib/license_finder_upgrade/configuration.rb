@@ -1,4 +1,5 @@
 require "delegate"
+require "pathname"
 
 module LicenseFinderUpgrade
   class Configuration
