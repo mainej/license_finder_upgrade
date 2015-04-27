@@ -26,6 +26,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency "sequel"
   spec.add_dependency LicenseFinderUpgrade::Platform.sqlite_gem
 
+  spec.add_development_dependency "rake"
   spec.add_development_dependency "rspec", "~> 3"
 
   spec.platform = "java" if LicenseFinderUpgrade::Platform.java?
